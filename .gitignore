@@ -1,0 +1,7 @@
+build/
+test/out/
+*.o
+*.ali
+*.img
+*.fd
+*.log
