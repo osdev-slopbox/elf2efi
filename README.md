@@ -40,6 +40,34 @@ Copy extra files onto the ESP with `--file HOST:ESP`:
 Firmware is auto-detected, or set `OVMF_CODE`/`OVMF_VARS`, `OVMF_DIR`,
 `QEMU`, or `QEMU_TIMEOUT`.
 
+## Nix
+
+The repository is a flake:
+
+```sh
+nix build .#default   # library, elf2efi, and example applications
+nix build .#elf2efi   # converter only
+nix develop           # GNAT, make, QEMU, OVMF, mtools, dosfstools
+```
+
+Downstream projects can build an application with:
+
+```nix
+inputs.ada-efi.url = "github:osdev-slopbox/elf2efi";
+
+# ...
+packages.x86_64-linux.myapp =
+  ada-efi.lib.mkAdaEfiApp pkgs {
+    name = "myapp";
+    src = ./.;
+    package = "myapp";  # myapp.ads + myapp.adb
+  };
+```
+
+Alternatively, use `overlays.default` and add `pkgs.ada-efi` to
+`nativeBuildInputs`. Its setup hook exports `ADA_EFI_INCLUDE`, `ADA_EFI_LIB`,
+`ADA_EFI_LDS`, `ADA_EFI_ELF2EFI`, and `ADA_EFI_ADAFLAGS`.
+
 ## Writing an application
 
 An application exports an Ada `Efi_Main` as the C symbol `efi_main`:
