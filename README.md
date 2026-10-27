@@ -1,12 +1,16 @@
 # Ada-EFI
 
-A small UEFI application library for Ada in the spirit of GNU-EFI, plus a
-self-hosted Ada ELF64-to-PE32+ converter.
+An Ada UEFI development library (in the spirit of GNU-EFI) and a standalone
+ELF64-to-PE32+ converter.
 
-It includes UEFI base types and tables, console I/O, memory allocation,
-loaded-image access, simple file-system support, and three examples:
-`hello` (console/output), `sysinfo` (firmware, config table, memory map), and
-`cat` (read a file from the boot volume).
+The library provides UEFI base types and tables, console I/O, memory
+allocation, loaded-image access, simple file-system support, and three
+examples: `hello` (console/output), `sysinfo` (firmware, config table,
+memory map), and `cat` (read a file from the boot volume).
+
+The converter `elf2efi` is a separate tool and does not require the library.
+It works with any Ada (or C) UEFI application built as a position-independent
+ELF executable, regardless of whether the Ada-EFI library is used.
 
 ## Requirements
 
